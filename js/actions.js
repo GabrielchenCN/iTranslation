@@ -1,15 +1,27 @@
-let changeColor = document.getElementById('changeColor');
+let changeColor = document.getElementById('open');
+let translationInput = document.getElementById('translationInput');
+let translationRes = document.getElementById('res');
 
-// chrome.storage.sync.get('color', function(data) {
-//   changeColor.style.backgroundColor = data.color;
-//   changeColor.setAttribute('value', data.color);
-// });
+
 
 changeColor.onclick = function(element) {
-    let color = element.target.value;
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      chrome.tabs.executeScript(
-          tabs[0].id,
-          {code: 'console.log("show");'});
-    });
-  };
+    let translationInputValue = translationInput.value;
+    request('get','https://translate.google.cn/translate_a/single',{
+        client:"t",
+        sl:"en",
+        tl:"zh-CN",
+        hl:"en",
+        dt:"at",
+        ie:"UTF-8",
+        oe:"UTF-8",
+        source:"btn",
+        tk:"643942.1004232",
+        q:"hello",
+    }).then(function(res){
+        translationRes.value = res;
+    },function(rej){
+        translationRes.value = translationInputValue;
+    })
+    
+    // chrome.tabs.create({url: ' https://translate.google.cn/#en/zh-CN/' + encodeURI(translationInputValue)});
+};

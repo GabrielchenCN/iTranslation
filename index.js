@@ -22,8 +22,8 @@ chrome.contextMenus.onClicked.addListener(function(info,tabs){
 });
 
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({color: '#3aa757'}, function() {
-      console.log('The color is green.');
+    chrome.storage.sync.set({color: '#3aa757', language:'zh'}, function() {
+      console.log('init user preference');
     });
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     //   chrome.declarativeContent.onPageChanged.addRules([{
