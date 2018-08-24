@@ -1,4 +1,4 @@
-function request(method,url,params){
+function request(method,url,params,headers){
     console.log("starting XHR");
     let oXHR = null;
     if(window.XMLHttpRequest) {
@@ -20,12 +20,12 @@ function request(method,url,params){
             switch (method.toUpperCase()) {
                 case 'GET':
                     oXHR.open(method,url+"?"+GenerationGetMethodParams(params));
-                    oXHR.setRequestHeader("Content-type", "application/json");
+                    setRequestHeader(oXHR,headers,method)
                     oXHR.send(); 
                     break;
                 case 'POST':
                     oXHR.open(method,url);
-                    oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    setRequestHeader(oXHR,headers,method)
                     oXHR.send(GenerationGetMethodParams(params)); 
                 default:
                     break;
@@ -35,6 +35,23 @@ function request(method,url,params){
     }
 }
 
+function setRequestHeader(oXHR,headers,method){
+    const defaultHeaders ={
+        "GET":{"Content-Type": "application/json"},
+        "POST":{"Content-Type": "application/x-www-form-urlencoded"}
+    };
+    
+    if(headers!== undefined){
+        let resHeaders = Object.assign(defaultHeaders[method.toUpperCase()],headers);
+        Object.entries(resHeaders).forEach(function(item){
+            oXHR.setRequestHeader(item[0], item[1]);
+        });
+    }else {
+        Object.entries(defaultHeaders[method.toUpperCase()]).forEach(function(item){
+            oXHR.setRequestHeader(item[0], item[1]);
+        });
+    }
+}
 function GenerationGetMethodParams(params) {
     const res = Object.keys(params).map(function(key) {
         return encodeURIComponent(key) + '=' +

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <head>
     <style>
       button {
@@ -33,9 +34,15 @@
         <h4>iTranslation</h4>
         <input id="translationInput"></input>
         <textarea id="res"></textarea>
-        <button id="open">open</button>
-        <button id="translation">translation</button>
-        <h4>Powered by <a href="http://translate.yandex.com/" target="_blank">Yandex.Translate</a></h4>
+        <select id="type">
+          <option value="youdao">有道翻译</option>
+          <option value="yandex" selected>Yandex翻译</option>
+        </select>
+        <div>
+          <button id="open">google</button>
+          <button id="translation">translation</button>
+        </div>
+        <h4 id="poweredBy">Powered by <a id="poweredByLink" href="http://translate.yandex.com/" target="_blank">Yandex.Translate</a></h4>
     </div>
     <script src="../js/utils.js"></script>
     <script src="../js/request.js"></script>

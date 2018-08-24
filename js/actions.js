@@ -2,6 +2,9 @@ let open = document.getElementById('open');
 let translationBtn = document.getElementById('translation');
 let translationInput = document.getElementById('translationInput');
 let translationRes = document.getElementById('res');
+let translationType = document.getElementById('type');
+let translationPoweredBy = document.getElementById('poweredBy');
+let translationPoweredByLink = document.getElementById('poweredByLink');
 
 window.onload = function() {
     console.log("onload" + Date())
@@ -10,7 +13,23 @@ window.onload = function() {
     translationRes.value = chrome.i18n.getMessage('search');
     if(translationInput.value){
         translationBtn.click();
-    }   
+    };
+    
+    translationType.addEventListener('change',function(e){
+        console.log(e);
+        let PoweredObj ={
+            "youdao":{
+                "text":"Youdao",
+                "link":"http://ai.youdao.com/product-fanyi.s",
+            },
+            "yandex":{
+                "text":"Yandex.Translate",
+                "link":"http://translate.yandex.com/",
+            }
+        };
+        translationPoweredByLink.setAttribute("href",PoweredObj[e.target.value].link);
+        translationPoweredByLink.innerHTML=PoweredObj[e.target.value].text;
+    });
 }
 
 
@@ -28,9 +47,10 @@ open.onclick = function(element) {
 };
 
 
+
 translationBtn.onclick = function(element) {
     let translationInputValue = translationInput.value;
-    let url, way ;
+    let way ;
     if(hasChinese(translationInputValue)){
         // zh -> en 
         way ="zh-en";
@@ -38,10 +58,24 @@ translationBtn.onclick = function(element) {
         // en -> zh
         way ="en-zh"; 
     }
-    translation('yandex',translationInputValue,way).then(function(res){
-        translationRes.value = res;
-    });
-
+    switch (translationType.value) {
+        case 'youdao':
+            translation('youdao',translationInputValue,way).then(function(res){
+                translationRes.value = res;
+            });
+            break;
+        case 'yandex':
+            translation('yandex',translationInputValue,way).then(function(res){
+                translationRes.value = res;
+            });
+            break;
+    
+        default:
+            translation('youdao',translationInputValue,way).then(function(res){
+                translationRes.value = res;
+            });
+            break;
+    }
     // request('get','https://translate.google.cn/translate_a/single',{
     //     client:"t",
     //     sl:"en",
