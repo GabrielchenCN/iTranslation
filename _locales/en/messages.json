@@ -1,0 +1,10 @@
+{
+    "title":{
+        "message": "iTranslation",
+        "description": "app name"
+    },
+    "menusTitle":{
+        "message": "iTranslation",
+        "description": "menus title"
+    }
+}

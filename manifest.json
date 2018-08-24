@@ -7,6 +7,13 @@
       "scripts": ["translation.js","index.js","storage.js"],
       "persistent": false
     },
+    "content_scripts":[
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content-script.js"],
+            "run_at": "document_idle"
+        }
+    ],
     "browser_action": {
         "default_popup": "pages/popup.html",
         "default_icon": {
@@ -24,5 +31,6 @@
         "64": "images/translation64.png",
         "128": "images/translation128.png"
       },
+    "default_locale": "zh",
     "manifest_version": 2
   }
