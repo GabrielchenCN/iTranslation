@@ -19,11 +19,12 @@ function request(method,url,params){
             }
             switch (method.toUpperCase()) {
                 case 'GET':
-                    oXHR.open(method,url+"?"+GenerationGetMethodParams(params))
+                    oXHR.open(method,url+"?"+GenerationGetMethodParams(params));
                     oXHR.setRequestHeader("Content-type", "application/json");
                     oXHR.send(); 
                     break;
                 case 'POST':
+                    oXHR.open(method,url);
                     oXHR.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                     oXHR.send(GenerationGetMethodParams(params)); 
                 default:
