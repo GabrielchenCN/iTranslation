@@ -1,5 +1,5 @@
 let open = document.getElementById('open');
-let translation = document.getElementById('translation');
+let translationBtn = document.getElementById('translation');
 let translationInput = document.getElementById('translationInput');
 let translationRes = document.getElementById('res');
 
@@ -23,9 +23,8 @@ open.onclick = function(element) {
 };
 
 
-translation.onclick = function(element) {
+translationBtn.onclick = function(element) {
     let translationInputValue = translationInput.value;
-    let i = Math.floor(Math.random()*10000);
     let url, way ;
     if(hasChinese(translationInputValue)){
         // zh -> en 
@@ -34,16 +33,9 @@ translation.onclick = function(element) {
         // en -> zh
         way ="en-zh"; 
     }
-    url = `https://translate.yandex.net/api/v1/tr.json/translate?id=75e430e4.5b7fc0b1.38ab805c-30-${i}&srv=tr-text&lang=${way}&reason=auto`
-    request('post',url,{
-        text:translationInputValue,
-        option:4,
-    }).then(function(res){
-        resJson = JSON.parse(res);
-        translationRes.value = resJson.text[0];
-    },function(rej){
-        translationRes.value = translationInputValue;
-    })
+    translation('yandex',translationInputValue,way).then(function(res){
+        translationRes.value = res;
+    });
 
     // request('get','https://translate.google.cn/translate_a/single',{
     //     client:"t",
