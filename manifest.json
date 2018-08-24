@@ -16,7 +16,7 @@
           "storage.js"],
       "persistent": true
     },
-    "homepage_url":"https://github.com/GabrielchenCN",
+    "homepage_url":"https://github.com/GabrielchenCN/iTranslation",
     "content_scripts":[
         {
             "matches": ["<all_urls>"],
