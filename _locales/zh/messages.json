@@ -6,5 +6,9 @@
     "menusTitle":{
         "message": "翻译该段",
         "description": "应用名称"
+    },
+    "search":{
+        "message": "搜索中 ...",
+        "description": "Searching"
     }
 }

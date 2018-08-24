@@ -7,7 +7,12 @@ window.onload = function() {
     console.log("onload" + Date())
     translationInput.focus();  
     document.execCommand('paste');
+    translationRes.value = chrome.i18n.getMessage('search');
+    if(translationInput.value){
+        translationBtn.click();
+    }   
 }
+
 
 open.onclick = function(element) {
     let translationInputValue = translationInput.value;

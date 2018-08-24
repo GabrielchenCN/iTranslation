@@ -6,5 +6,9 @@
     "menusTitle":{
         "message": "iTranslation for",
         "description": "menus title"
+    },
+    "search":{
+        "message": "Searching ...",
+        "description": "Searching"
     }
 }
