@@ -7,7 +7,8 @@
         "storage",
         "contextMenus", 
         "tabs",
-        "webRequest"
+        "webRequest",
+        "clipboardRead"
     ],
     "background": {
       "scripts": [

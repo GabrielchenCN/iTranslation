@@ -3,6 +3,8 @@ const i18n ={
     menusTitle:chrome.i18n.getMessage('menusTitle'),
 }
 
+// 更新 menus title
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message == 'updateContextMenu') {
         if (request.selection) {

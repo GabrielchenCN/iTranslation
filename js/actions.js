@@ -3,7 +3,11 @@ let translation = document.getElementById('translation');
 let translationInput = document.getElementById('translationInput');
 let translationRes = document.getElementById('res');
 
-
+window.onload = function() {
+    console.log("onload" + Date())
+    translationInput.focus();  
+    document.execCommand('paste');
+}
 
 open.onclick = function(element) {
     let translationInputValue = translationInput.value;
