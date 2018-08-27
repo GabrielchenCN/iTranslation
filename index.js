@@ -3,19 +3,61 @@ const i18n ={
     menusTitle:chrome.i18n.getMessage('menusTitle'),
 }
 
-// 更新 menus title
 
+// 消息总线
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+    // 更新 menus title
     if (request.message == 'updateContextMenu') {
         if (request.selection) {
             chrome.contextMenus.update("menus-translate-1",{
                 title:`${i18n.menusTitle}:${request.selectText}`,
             })
         } 
+    // 翻译消息处理
+    } else if (request.message == 'translate') {
+        if (request.selection) {
+            let autoWay;
+            if(hasChinese(request.selectText)){
+                // zh -> en 
+                autoWay ="zh-en";
+            } else {
+                // en -> zh
+                autoWay ="en-zh"; 
+            }    
+            let way = request.way || autoWay;   
+            switch (request.origin) {
+                case 'popup':
+                    translation(request.type,request.selectText,way).then(function(res){
+                        chrome.runtime.sendMessage({
+                            message:"translateResult",
+                            selectText:res,
+                            selection:true
+                        });
+           
+                    })
+                    break;
+                case 'content':
+                    translation(request.type,request.selectText,way).then(function(res){
+                        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                            chrome.tabs.sendMessage(tabs[0].id, {
+                                message:"contentTranslateResult",
+                                selectText:res,
+                                selection:true
+                            }, function(response) {});  
+                        });
+                    })
+                    break;
+            
+                default:
+                    break;
+            }  
+        } 
     } else {
         sendResponse({});
     }
 });
+
+
 
 chrome.contextMenus.onClicked.addListener(function(info,tabs){
     console.log('用户选择：',info.selectionText);
@@ -28,13 +70,7 @@ chrome.runtime.onInstalled.addListener(function() {
       console.log('init user preference');
     });
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    //   chrome.declarativeContent.onPageChanged.addRules([{
-    //         conditions: [new chrome.declarativeContent.PageStateMatcher({
-    //         pageUrl: {hostEquals: 'developer.chrome.com'},
-    //         })
-    //         ],
-    //         actions: [new chrome.declarativeContent.ShowPageAction()]
-    //   }]);
+
     });
 
     chrome.contextMenus.create({

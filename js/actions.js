@@ -14,7 +14,7 @@ window.onload = function() {
     if(translationInput.value){
         translationBtn.click();
     };
-    
+
     translationType.addEventListener('change',function(e){
         console.log(e);
         let PoweredObj ={
@@ -50,32 +50,14 @@ open.onclick = function(element) {
 
 translationBtn.onclick = function(element) {
     let translationInputValue = translationInput.value;
-    let way ;
-    if(hasChinese(translationInputValue)){
-        // zh -> en 
-        way ="zh-en";
-    } else {
-        // en -> zh
-        way ="en-zh"; 
-    }
-    switch (translationType.value) {
-        case 'youdao':
-            translation('youdao',translationInputValue,way).then(function(res){
-                translationRes.value = res;
-            });
-            break;
-        case 'yandex':
-            translation('yandex',translationInputValue,way).then(function(res){
-                translationRes.value = res;
-            });
-            break;
-    
-        default:
-            translation('youdao',translationInputValue,way).then(function(res){
-                translationRes.value = res;
-            });
-            break;
-    }
+    // 交给background脚本请求
+    chrome.extension.sendMessage({
+        'message': 'translate', 
+        'selectText':translationInputValue,
+        'type':translationType.value,
+        'way':null,
+        'origin':'popup',
+        'selection': true});
     // request('get','https://translate.google.cn/translate_a/single',{
     //     client:"t",
     //     sl:"en",
@@ -95,3 +77,14 @@ translationBtn.onclick = function(element) {
 
     
 };
+
+// 监听background脚本返回数据
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.message == 'translateResult') {
+        if (request.selection) {
+            translationRes.value=request.selectText;
+        } 
+    }  else {
+        sendResponse({});
+    }
+});
