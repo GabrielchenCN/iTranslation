@@ -5,6 +5,8 @@ let translationRes = document.getElementById('res');
 let translationType = document.getElementById('type');
 let translationPoweredBy = document.getElementById('poweredBy');
 let translationPoweredByLink = document.getElementById('poweredByLink');
+let translationDisabledRadio = document.getElementById('disabled');
+let translationEnabledRadio = document.getElementById('enabled');
 
 window.onload = function() {
     console.log("onload" + Date())
@@ -30,8 +32,38 @@ window.onload = function() {
         translationPoweredByLink.setAttribute("href",PoweredObj[e.target.value].link);
         translationPoweredByLink.innerHTML=PoweredObj[e.target.value].text;
     });
+
+
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        if (request.msg == "getDisabled") {
+            sendResponse({disabled: global.disabled});
+            return true;
+        }
+    });
+
+    // 检查取词翻译状态
+    chrome.storage.sync.get(['disabled'], function(obj) {
+        if(obj && obj.disabled){
+            translationDisabledRadio.checked = true;
+        }else {
+            translationEnabledRadio.checked = true;
+        }
+    });
 }
 
+// 取词翻译控制
+
+translationDisabledRadio.onchange = function(e) {
+    chrome.storage.sync.set({disabled: true}, function() {
+        console.log('disable the extension in the content script');
+     });
+}
+
+translationEnabledRadio.onchange = function(e) {
+    chrome.storage.sync.set({disabled: false}, function() {
+        console.log('enable the extension in the content script');
+     });
+}
 
 open.onclick = function(element) {
     let translationInputValue = translationInput.value;
