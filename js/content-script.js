@@ -44,6 +44,8 @@ document.addEventListener("mouseup", function(event){
      chrome.storage.sync.get(['disabled'],function(obj) {
         if(obj && obj.disabled){
             iTranslation_popup.style.display='none';
+            iTranslation_popup.style.top=event.pageY+"px";
+            iTranslation_popup.style.left=event.pageX+"px";
             return false;
         }
         if (event.button !== 0) {
@@ -76,7 +78,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.selection) {
             iTranslation_popup.innerHTML=request.selectText;
         } 
-    }  else {
+    }  else if (request.message == 'menusClickTranslateResult') {
+        if (request.selection) {
+            iTranslation_popup.style.display='block';
+            iTranslation_popup.innerHTML=request.selectText;
+        } 
+    } else {
         sendResponse({});
     }
 });

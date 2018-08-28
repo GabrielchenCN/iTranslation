@@ -47,7 +47,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
                         });
                     })
                     break;
-            
                 default:
                     break;
             }  
@@ -58,10 +57,26 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 
-
+// 右键菜单操作
 chrome.contextMenus.onClicked.addListener(function(info,tabs){
     console.log('用户选择：',info.selectionText);
-  
+    let way ;
+    if(hasChinese(request.selectText)){
+        // zh -> en 
+        way ="zh-en";
+    } else {
+        // en -> zh
+        way ="en-zh"; 
+    }    
+    translation('youdao',info.selectionText,way).then(function(res){
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+            chrome.tabs.sendMessage(tabs[0].id, {
+                message:"menusClickTranslateResult",
+                selectText:res,
+                selection:true
+            }, function(response) {});  
+        });
+    })
     console.log(info,tabs);
 });
 
