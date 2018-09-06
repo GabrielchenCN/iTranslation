@@ -3,9 +3,91 @@
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <head>
     <style>
+      .header{
+        display: flex;
+        justify-content:space-between;
+      }
+      
+      /* checkbox button */
+      .tgBox {
+        margin: 0.83em 0 ;
+      }
+      .tgl {
+        display: none;
+      }
+      .tgl-light + .tgl-btn {
+        background: #f0f0f0;
+        border-radius: 2em;
+        padding: 2px;
+        transition: all .4s ease;
+      }
+      .tgl-light + .tgl-btn:after {
+        border-radius: 50%;
+        background: #fff;
+        transition: all .2s ease;
+      }
+      .tgl:checked + .tgl-btn:after{
+        left: 50%;
+      }
+      .tgl + .tgl-btn:after{
+        left: 0;
+      }
+      .tgl + .tgl-btn:after{
+        position: relative;
+        display: block;
+        content: "";
+        width: 50%;
+        height: 100%;
+      }
+
+      .tgl-light + .tgl-btn{
+        background: #f0f0f0;
+        border-radius: 2em;
+        padding: 2px;
+        transition: all .4s ease;
+      }
+
+      .tgl + .tgl-btn{
+        outline: 0;
+        display: block;
+        width: 3em;
+        height: 1.5em;
+        position: relative;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      /* .tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn{
+        box-sizing: border-box;
+      } */
+
+      .tgl-light:checked + .tgl-btn{
+        background: #9FD6AE;
+      }
+
+      /* popup */
+      .popup {
+        width: 250px;
+        padding:10px 5px;
+      }
       button {
         height: 30px;
-        outline: none;
+        width: 80px;
+        border-radius: 15px;
+        background-color: cornflowerblue;
+        color: white;
+        padding: 0;
+        border-width: 0px;
+        cursor: pointer;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 0;
       }
 
       textarea {
@@ -18,43 +100,43 @@
         line-height:1.5;
         padding:15px 15px 30px;
         border-radius:3px;
-        border:1px solid #F7E98D;
+        border:1px solid #999;
         transition:box-shadow 0.5s ease;
         box-shadow:0 4px 6px rgba(0,0,0,0.1);
-        background:linear-gradient(#F9EFAF, #F7E98D);
-        background:-o-linear-gradient(#F9EFAF, #F7E98D);
-        background:-ms-linear-gradient(#F9EFAF, #F7E98D);
-        background:-moz-linear-gradient(#F9EFAF, #F7E98D);
-        background:-webkit-linear-gradient(#F9EFAF, #F7E98D);
       }
     </style>
   </head>
   <body>
-    <div>
-        <h4>iTranslation</h4>
-        <div>
-          <input type="radio" id="disabled"
+    <div class="popup">
+        
+        <div class="header">
+          <!-- <input type="radio" id="disabled"
            name="contact" value="disabled">
           <label for="disabled">关闭</label>
       
           <input type="radio" id="enabled"
            name="contact" value="enabled">
-          <label for="enabled">打开</label>
+          <label for="enabled">打开</label> -->
+          <h2>iTranslation</h2>
+          <div class="tgBox">
+              <input type="checkbox" id="cb1" class="tgl tgl-light">
+              <label class="tgl-btn" for="cb1"></label>
+          </div>
+          
         </div>
         <input id="translationInput"></input>
         <textarea id="res"></textarea>
         <select id="type">
-          <option value="youdao">有道翻译</option>
-          <option value="yandex" selected>Yandex翻译</option>
+          <option value="youdao" selected>有道翻译</option>
+          <option value="yandex">Yandex翻译</option>
         </select>
-        <div>
+        <div class="buttons">
           <button id="open">google</button>
           <button id="translation">translation</button>
         </div>
-        <h4 id="poweredBy">Powered by <a id="poweredByLink" href="http://translate.yandex.com/" target="_blank">Yandex.Translate</a></h4>
+        <h4 id="poweredBy">Powered by <a id="poweredByLink" href="http://ai.youdao.com/product-fanyi.s" target="_blank">Youdao</a></h4>
     </div>
-    <!-- <script src="../js/utils.js"></script>
-    <script src="../js/request.js"></script> -->
+    <script src="../js/utils.js"></script>
     <script src="../js/actions.js"></script>
   </body>
 </html>
