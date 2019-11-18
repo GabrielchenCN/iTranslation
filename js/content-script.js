@@ -15,7 +15,15 @@ function iTranslation_getSelected() {
     }
 }
 
-
+function escapeHTML (unsafe_str) {
+    return unsafe_str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\"/g, '&quot;')
+      .replace(/\'/g, '&#39;')
+      .replace(/\//g, '&#x2F;')
+}
 
 document.addEventListener("mousedown", function(event){
     if (event.button !== 2) {
@@ -76,12 +84,15 @@ document.addEventListener("mouseup", function(event){
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.message == 'contentTranslateResult') {
         if (request.selection) {
-            iTranslation_popup.innerHTML=request.selectText;
+            iTranslation_popup.style.display='block';
+            iTranslation_popup.style["z-index"]=1200;
+            iTranslation_popup.innerHTML=escapeHTML(request.selectText);
         } 
     }  else if (request.message == 'menusClickTranslateResult') {
         if (request.selection) {
             iTranslation_popup.style.display='block';
-            iTranslation_popup.innerHTML=request.selectText;
+            iTranslation_popup.style["z-index"]=1200;
+            iTranslation_popup.innerHTML=escapeHTML(request.selectText);
         } 
     } else {
         sendResponse({});
