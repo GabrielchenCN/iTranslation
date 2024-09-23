@@ -28,7 +28,6 @@ function translationByYoudao(text,way) {
 }
 
 
-
 function translationByYandex(text,way) {
     let i = Math.floor(Math.random()*10000);
     let url = `https://translate.yandex.net/api/v1/tr.json/translate?id=75e430e4.5b7fc0b1.38ab805c-30-${i}&srv=tr-text&lang=${way}&reason=auto`

@@ -68,7 +68,7 @@ chrome.contextMenus.onClicked.addListener(function(info,tabs){
         // en -> zh
         way ="en-zh"; 
     }    
-    translation('youdao-api',info.selectionText,way).then(function(res){
+    translation('youdao',info.selectionText,way).then(function(res){
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
             chrome.tabs.sendMessage(tabs[0].id, {
                 message:"menusClickTranslateResult",

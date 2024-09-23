@@ -68,7 +68,7 @@ document.addEventListener("mouseup", function(event){
                 chrome.extension.sendMessage({
                     'message': 'translate', 
                     'selectText':selected,
-                    'type':'youdao-api',
+                    'type':'youdao',
                     'way':null,
                     'origin':'content',
                     'selection': true});
