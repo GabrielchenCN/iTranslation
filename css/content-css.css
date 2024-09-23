@@ -1,0 +1,15 @@
+.iTranslation-popup-tag{
+    position:absolute;
+    display:none;
+    top:0;
+    left:0;
+    background-color:rgba(112, 111, 108, 0.77);
+    color:white;
+    padding:10px;
+    font-size:20px;
+    font-weight:bold;
+    text-decoration:underline;
+    cursor:pointer;
+    -webkit-filter: drop-shadow(0 1px 10px rgba(113,158,206,0.8));
+    z-index: 1005;
+}

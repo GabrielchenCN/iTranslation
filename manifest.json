@@ -1,0 +1,48 @@
+{
+    "name": "iTranslation",
+    "version": "0.01",
+    "description": "a smart, quick and light translation extension",
+    "permissions": [
+        "declarativeContent",
+        "storage",
+        "contextMenus", 
+        "tabs",
+        "webRequest",
+        "clipboardRead"
+    ],
+    "background": {
+      "scripts": [
+          "translation.js",
+          "index.js",
+          "storage.js"],
+      "persistent": true
+    },
+    "homepage_url":"https://github.com/GabrielchenCN/iTranslation",
+    "content_scripts":[
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content-script.js"],
+            "css": ["css/content-css.css"],
+            "run_at": "document_start"
+        }
+    ],
+    "browser_action": {
+        "default_popup": "pages/popup.html",
+        "default_icon": {
+            "16": "images/translation16.png",
+            "32": "images/translation32.png",
+            "48": "images/translation48.png",
+            "64": "images/translation64.png",
+            "128": "images/translation128.png"
+          }
+    },
+    "icons": {
+        "16": "images/translation16.png",
+        "32": "images/translation32.png",
+        "48": "images/translation48.png",
+        "64": "images/translation64.png",
+        "128": "images/translation128.png"
+      },
+    "default_locale": "zh",
+    "manifest_version": 2
+  }
